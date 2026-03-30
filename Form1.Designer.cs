@@ -43,7 +43,7 @@ partial class Form1
         components = new System.ComponentModel.Container();
 
         // 窗体设置
-        this.Text = "Window On Top";
+        this.Text = "窗口置顶工具";
         this.ClientSize = new Size(320, 400);
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
@@ -53,7 +53,7 @@ partial class Form1
 
         // One Way 分组框
         grpOneWay = new GroupBox();
-        grpOneWay.Text = "One Way:";
+        grpOneWay.Text = "方式一：";
         grpOneWay.Location = new Point(12, 8);
         grpOneWay.Size = new Size(290, 90);
         grpOneWay.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -77,7 +77,7 @@ partial class Form1
 
         // 拖拽提示文字
         lblDragHint = new Label();
-        lblDragHint.Text = "Drag the hand to the target\nwindow, release the mouse.";
+        lblDragHint.Text = "拖拽手型图标到目标窗口，\n然后松开鼠标即可置顶。";
         lblDragHint.Location = new Point(80, 28);
         lblDragHint.Size = new Size(190, 40);
         lblDragHint.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -87,21 +87,21 @@ partial class Form1
 
         // Other Way 分组框
         grpOtherWay = new GroupBox();
-        grpOtherWay.Text = "Other Way:";
+        grpOtherWay.Text = "方式二：";
         grpOtherWay.Location = new Point(12, 105);
         grpOtherWay.Size = new Size(290, 65);
         grpOtherWay.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
 
         // 热键提示
         lblHotkey = new Label();
-        lblHotkey.Text = "Ctrl+F8  Top / Cancel";
+        lblHotkey.Text = "Ctrl+F8  置顶 / 取消";
         lblHotkey.Location = new Point(20, 28);
         lblHotkey.Size = new Size(150, 20);
         lblHotkey.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
 
         // 退出按钮
         btnExit = new Button();
-        btnExit.Text = "Exit";
+        btnExit.Text = "退出";
         btnExit.Location = new Point(200, 24);
         btnExit.Size = new Size(75, 25);
         btnExit.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -112,7 +112,7 @@ partial class Form1
 
         // 透明度设置分组框
         grpOpacity = new GroupBox();
-        grpOpacity.Text = "Opacity Setting:";
+        grpOpacity.Text = "透明度设置：";
         grpOpacity.Location = new Point(12, 175);
         grpOpacity.Size = new Size(290, 100);
         grpOpacity.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
@@ -140,7 +140,7 @@ partial class Form1
 
         // 提示标签
         Label lblOpacityHint = new Label();
-        lblOpacityHint.Text = "Ctrl+F9 to apply opacity to active window";
+        lblOpacityHint.Text = "按 Ctrl+F9 将透明度应用到当前活动窗口";
         lblOpacityHint.Location = new Point(20, 70);
         lblOpacityHint.Size = new Size(260, 20);
         lblOpacityHint.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -152,21 +152,21 @@ partial class Form1
 
         // 幽灵模式分组框
         GroupBox grpGhost = new GroupBox();
-        grpGhost.Text = "Ghost Mode:";
+        grpGhost.Text = "幽灵模式：";
         grpGhost.Location = new Point(12, 280);
         grpGhost.Size = new Size(290, 80);
         grpGhost.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
 
         // 幽灵模式说明
         Label lblGhostHint = new Label();
-        lblGhostHint.Text = "Ctrl+F10 to toggle ghost mode\n(Semi-transparent + Click-through)";
+        lblGhostHint.Text = "按 Ctrl+F10 切换幽灵模式\n（半透明 + 点击穿透）";
         lblGhostHint.Location = new Point(20, 25);
         lblGhostHint.Size = new Size(260, 40);
         lblGhostHint.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
 
         // 幽灵模式状态标签
         Label lblGhostStatus = new Label();
-        lblGhostStatus.Text = "Status: Normal";
+        lblGhostStatus.Text = "状态：正常";
         lblGhostStatus.Location = new Point(20, 55);
         lblGhostStatus.Size = new Size(150, 20);
         lblGhostStatus.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point);
@@ -192,7 +192,7 @@ partial class Form1
         contextMenu = new ContextMenuStrip();
 
         // 显示/隐藏菜单项
-        ToolStripMenuItem menuShow = new ToolStripMenuItem("Show");
+        ToolStripMenuItem menuShow = new ToolStripMenuItem("显示");
         menuShow.Click += (sender, e) => ShowMainWindow();
         contextMenu.Items.Add(menuShow);
 
@@ -200,9 +200,9 @@ partial class Form1
         contextMenu.Items.Add(new ToolStripSeparator());
 
         // 透明度子菜单
-        ToolStripMenuItem menuOpacity = new ToolStripMenuItem("Opacity");
+        ToolStripMenuItem menuOpacity = new ToolStripMenuItem("透明度");
         
-        ToolStripMenuItem menuOpacity100 = new ToolStripMenuItem("100% (Opaque)");
+        ToolStripMenuItem menuOpacity100 = new ToolStripMenuItem("100%（不透明）");
         menuOpacity100.Click += (sender, e) => SetOpacityFromMenu(100);
         
         ToolStripMenuItem menuOpacity80 = new ToolStripMenuItem("80%");
@@ -224,7 +224,7 @@ partial class Form1
         contextMenu.Items.Add(new ToolStripSeparator());
 
         // 幽灵模式菜单项
-        ToolStripMenuItem menuGhost = new ToolStripMenuItem("Ghost Mode (Ctrl+F10)");
+        ToolStripMenuItem menuGhost = new ToolStripMenuItem("幽灵模式 (Ctrl+F10)");
         menuGhost.Click += (sender, e) => ToggleGhostModeFromMenu();
         contextMenu.Items.Add(menuGhost);
 
@@ -232,14 +232,14 @@ partial class Form1
         contextMenu.Items.Add(new ToolStripSeparator());
 
         // 退出菜单项
-        ToolStripMenuItem menuExit = new ToolStripMenuItem("Exit");
+        ToolStripMenuItem menuExit = new ToolStripMenuItem("退出");
         menuExit.Click += (sender, e) => ExitApplication();
         contextMenu.Items.Add(menuExit);
 
         // 创建托盘图标
         notifyIcon = new NotifyIcon(components);
         notifyIcon.Icon = CreateApplicationIcon();
-        notifyIcon.Text = "Window On Top";
+        notifyIcon.Text = "窗口置顶工具";
         notifyIcon.ContextMenuStrip = contextMenu;
         notifyIcon.Visible = true;
 

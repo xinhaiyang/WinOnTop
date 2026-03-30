@@ -287,7 +287,7 @@ public partial class Form1 : Form
         Control[] labels = this.Controls.Find("lblGhostStatus", true);
         if (labels.Length > 0 && labels[0] is Label lbl)
         {
-            lbl.Text = isGhost ? "Status: Ghost Mode" : "Status: Normal";
+            lbl.Text = isGhost ? "状态：幽灵模式" : "状态：正常";
             lbl.ForeColor = isGhost ? Color.Red : Color.Gray;
         }
     }
