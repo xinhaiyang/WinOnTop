@@ -13,6 +13,9 @@ partial class Form1
     private Button btnExit;
     private GroupBox grpOneWay;
     private GroupBox grpOtherWay;
+    private GroupBox grpOpacity;
+    private TrackBar trackOpacity;
+    private Label lblOpacityValue;
     private NotifyIcon notifyIcon;
     private ContextMenuStrip contextMenu;
 
@@ -41,7 +44,7 @@ partial class Form1
 
         // 窗体设置
         this.Text = "Window On Top";
-        this.ClientSize = new Size(320, 220);
+        this.ClientSize = new Size(320, 400);
         this.FormBorderStyle = FormBorderStyle.FixedSingle;
         this.MaximizeBox = false;
         this.StartPosition = FormStartPosition.CenterScreen;
@@ -107,9 +110,77 @@ partial class Form1
         grpOtherWay.Controls.Add(lblHotkey);
         grpOtherWay.Controls.Add(btnExit);
 
+        // 透明度设置分组框
+        grpOpacity = new GroupBox();
+        grpOpacity.Text = "Opacity Setting:";
+        grpOpacity.Location = new Point(12, 175);
+        grpOpacity.Size = new Size(290, 100);
+        grpOpacity.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+
+        // 透明度滑块
+        trackOpacity = new TrackBar();
+        trackOpacity.Location = new Point(20, 25);
+        trackOpacity.Size = new Size(200, 45);
+        trackOpacity.Minimum = 20;  // 最小20%，完全透明会看不见
+        trackOpacity.Maximum = 100; // 最大100%
+        trackOpacity.Value = 100;   // 默认100%
+        trackOpacity.TickFrequency = 10;
+        trackOpacity.Scroll += (sender, e) =>
+        {
+            lblOpacityValue.Text = $"{trackOpacity.Value}%";
+            UpdateOpacityFromSlider(trackOpacity.Value);
+        };
+
+        // 透明度值标签
+        lblOpacityValue = new Label();
+        lblOpacityValue.Text = "100%";
+        lblOpacityValue.Location = new Point(230, 30);
+        lblOpacityValue.Size = new Size(40, 20);
+        lblOpacityValue.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+
+        // 提示标签
+        Label lblOpacityHint = new Label();
+        lblOpacityHint.Text = "Ctrl+F9 to apply opacity to active window";
+        lblOpacityHint.Location = new Point(20, 70);
+        lblOpacityHint.Size = new Size(260, 20);
+        lblOpacityHint.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point);
+        lblOpacityHint.ForeColor = Color.Gray;
+
+        grpOpacity.Controls.Add(trackOpacity);
+        grpOpacity.Controls.Add(lblOpacityValue);
+        grpOpacity.Controls.Add(lblOpacityHint);
+
+        // 幽灵模式分组框
+        GroupBox grpGhost = new GroupBox();
+        grpGhost.Text = "Ghost Mode:";
+        grpGhost.Location = new Point(12, 280);
+        grpGhost.Size = new Size(290, 80);
+        grpGhost.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+
+        // 幽灵模式说明
+        Label lblGhostHint = new Label();
+        lblGhostHint.Text = "Ctrl+F10 to toggle ghost mode\n(Semi-transparent + Click-through)";
+        lblGhostHint.Location = new Point(20, 25);
+        lblGhostHint.Size = new Size(260, 40);
+        lblGhostHint.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point);
+
+        // 幽灵模式状态标签
+        Label lblGhostStatus = new Label();
+        lblGhostStatus.Text = "Status: Normal";
+        lblGhostStatus.Location = new Point(20, 55);
+        lblGhostStatus.Size = new Size(150, 20);
+        lblGhostStatus.Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point);
+        lblGhostStatus.ForeColor = Color.Gray;
+        lblGhostStatus.Name = "lblGhostStatus";
+
+        grpGhost.Controls.Add(lblGhostHint);
+        grpGhost.Controls.Add(lblGhostStatus);
+
         // 添加控件到窗体
         this.Controls.Add(grpOneWay);
         this.Controls.Add(grpOtherWay);
+        this.Controls.Add(grpOpacity);
+        this.Controls.Add(grpGhost);
 
         // 初始化系统托盘图标
         InitializeTrayIcon();
@@ -124,6 +195,38 @@ partial class Form1
         ToolStripMenuItem menuShow = new ToolStripMenuItem("Show");
         menuShow.Click += (sender, e) => ShowMainWindow();
         contextMenu.Items.Add(menuShow);
+
+        // 分隔线
+        contextMenu.Items.Add(new ToolStripSeparator());
+
+        // 透明度子菜单
+        ToolStripMenuItem menuOpacity = new ToolStripMenuItem("Opacity");
+        
+        ToolStripMenuItem menuOpacity100 = new ToolStripMenuItem("100% (Opaque)");
+        menuOpacity100.Click += (sender, e) => SetOpacityFromMenu(100);
+        
+        ToolStripMenuItem menuOpacity80 = new ToolStripMenuItem("80%");
+        menuOpacity80.Click += (sender, e) => SetOpacityFromMenu(80);
+        
+        ToolStripMenuItem menuOpacity60 = new ToolStripMenuItem("60%");
+        menuOpacity60.Click += (sender, e) => SetOpacityFromMenu(60);
+        
+        ToolStripMenuItem menuOpacity40 = new ToolStripMenuItem("40%");
+        menuOpacity40.Click += (sender, e) => SetOpacityFromMenu(40);
+
+        menuOpacity.DropDownItems.Add(menuOpacity100);
+        menuOpacity.DropDownItems.Add(menuOpacity80);
+        menuOpacity.DropDownItems.Add(menuOpacity60);
+        menuOpacity.DropDownItems.Add(menuOpacity40);
+        contextMenu.Items.Add(menuOpacity);
+
+        // 分隔线
+        contextMenu.Items.Add(new ToolStripSeparator());
+
+        // 幽灵模式菜单项
+        ToolStripMenuItem menuGhost = new ToolStripMenuItem("Ghost Mode (Ctrl+F10)");
+        menuGhost.Click += (sender, e) => ToggleGhostModeFromMenu();
+        contextMenu.Items.Add(menuGhost);
 
         // 分隔线
         contextMenu.Items.Add(new ToolStripSeparator());
